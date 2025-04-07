@@ -2,33 +2,39 @@ include ../head.pug
 
 body
   .container.mt-5
-    h1 Add/Update Event
-    form(action="/submit-event-form" method="POST")
+    h1 Add/Update Goal
+    form(action="/submit-goal-form" method="POST")
       .mb-3
-        label(for="eventName" class="form-label") Event Name
-        input(type="text" class="form-control" id="eventName" name="eventName" required)
+        label(for="goalName" class="form-label") Goal Name
+        input(type="text" class="form-control" id="goalName" name="goalName" required)
       .mb-3
-        label(for="eventDateTime" class="form-label") Event Date/Time
+        label(for="startDateTime" class="form-label") Start Date/Time
         .input-group.date(id="datetimepicker1" data-target-input="nearest")
           input(
             type="text"
             class="form-control datetimepicker-input"
             data-target="#datetimepicker1"
-            name="eventDateTime"
+            name="startDateTime"
             required
           )
           .input-group-append(data-target="#datetimepicker1" data-toggle="datetimepicker")
             .input-group-text
               i.fas.fa-calendar-alt
       .mb-3
-        label(for="venue" class="form-label") Venue
-        input(type="text" class="form-control" id="venue" name="venue" required)
+        label(for="Target" class="form-label") Target
+        input(type="text" class="form-control" id="target" name="target" required)
       .mb-3
-        label(for="contactPhone" class="form-label") Contact Phone
-        input(type="tel" class="form-control" id="contactPhone" name="contactPhone" required)
+        label(for="age" class="form-label") Age
+        input(type="number" class="form-control" id="age" name="age" placeholder="e.g., 25" min="1" required)
       .mb-3
-        label(for="seat" class="form-label") Seat
-        input(type="text" class="form-control" id="seat" name="seat" required)
+        label(for="currentWeight" class="form-label") Current Weight (kg)
+        input(type="number" class="form-control" id="currentWeight" name="currentWeight" placeholder="e.g., 70 kg" min="1" step="any" required)
+      .mb-3
+        label(for="height" class="form-label") Height (cm)
+        input(type="number" class="form-control" id="height" name="height" placeholder="e.g., 170 cm" min="50" step="any" required)
+      .mb-3
+        label(for="goalImage" class="form-label") Goal Image
+        input(type="file" class="form-control" id="goalImage" name="goalImage" accept="image/*")
       button(type="submit" class="btn btn-primary") Add/Edit
 
   script.

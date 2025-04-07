@@ -1,35 +1,47 @@
 include ../head.pug
+
 body
-    .container.mt-5
-    h1 List
-      table.table.table-responsive.table-hover.table-striped.table-dark
-        thead
-          tr
-            th(scope="col") ID
-            th(scope="col") Event Name
-            th(scope="col") Event DateTime
-            th(scope="col") Venue
-            th(scope="col") Contact Phone
-            th(scope="col") Seat
-            th(scope="col") Actions
-        tbody
-          tr
-            td 1
-            td Example Event Name 1
-            td 2024-02-17 10:00
-            td Example Venue
-            td +1234567890
-            td 42
-            td
-              button.btn.btn-primary.btn-sm Edit
-              button.btn.btn-danger.btn-sm Delete
-          tr
-            td 1
-            td Example Event Name 2
-            td 2024-02-17 10:00
-            td Example Venue
-            td +1234567890
-            td 42
-            td
-              button.btn.btn-primary.btn-sm Edit
-              button.btn.btn-danger.btn-sm Delete 
+  .container.mt-5
+    h1 Goal List
+    table.table.table-responsive.table-hover.table-striped.table-white
+      thead
+        tr
+          th(scope="col") ID
+          th(scope="col") Goal Name
+          th(scope="col") Start DateTime
+          th(scope="col") Target
+          th(scope="col") Age
+          th(scope="col") Current Weight (kg)
+          th(scope="col") Height (cm)
+          th(scope="col") Actions
+      tbody
+
+  script.
+    document.addEventListener('DOMContentLoaded', function() {
+      axios.get('/api/goals')
+        .then(function(response) {
+          const goals = response.data;
+          const tableBody = document.querySelector('table tbody');
+          goals.forEach(g => {
+            const row = document.createElement('tr');
+            const goal = g.goal;
+            row.innerHTML = `
+              <td>${g.id}</td>
+              <td>${goal.goalName}</td>
+              <td>${goal.startDateTime}</td>
+              <td>${goal.target}</td>
+              <td>${goal.age}</td>
+              <td>${goal.currentWeight}</td>
+              <td>${goal.height}</td>
+              <td>
+                <button class="btn btn-primary btn-sm">Edit</button>
+                <button class="btn btn-danger btn-sm">Delete</button>
+              </td>
+            `;
+            tableBody.appendChild(row);
+          });
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    });
