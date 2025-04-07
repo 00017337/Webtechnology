@@ -1,14 +1,24 @@
 [
     {
-        "id": "asf13rdsf",
+        "id": "abc1",
         "goal": {
-        "goalName": "Weight Loss Goal",
-        "startDateTime": "12/02/2024 19:00",
-        "target": "Lose 5 kg",
-        "age": "25",
-        "currentWeight": "70",
-        "height": "170",
-        "goalImage": "image-url.jpg"
-      }
+            "goalName": "Run a marathon",
+            "startDateTime": "2023-12-31T00:00:00.000Z",
+            "target": "Complete 42 km",
+            "age": 30,
+            "currentWeight": 70.5,
+            "height": 175
+        }
+    },
+    {
+        "id": "dM0Z",
+        "goal": {
+            "goalName": "dfbfxbhs",
+            "startDateTime": "01/12/2027 13:35",
+            "target": "rgbvsrbgvrstbtrb",
+            "age": "34",
+            "currentWeight": "45",
+            "height": "156"
+        }
     }
-  ]
+]

@@ -1,47 +1,68 @@
 include ../head.pug
-
 body
   .container.mt-5
-    h1 Goal List
-    table.table.table-responsive.table-hover.table-striped.table-white
+    .row.d-flex.align-items-center
+      .col-md-6
+        h1 My Goals
+      .col-md-6.text-end
+        a.btn.btn-success(href='/goals/add', role='button') Add Goal
+    table.table.table-responsive.table-hover.table-striped.table-dark
       thead
         tr
           th(scope="col") ID
           th(scope="col") Goal Name
-          th(scope="col") Start DateTime
+          th(scope="col") Start Date
           th(scope="col") Target
           th(scope="col") Age
-          th(scope="col") Current Weight (kg)
+          th(scope="col") Weight (kg)
           th(scope="col") Height (cm)
           th(scope="col") Actions
       tbody
 
-  script.
-    document.addEventListener('DOMContentLoaded', function() {
-      axios.get('/api/goals')
-        .then(function(response) {
-          const goals = response.data;
-          const tableBody = document.querySelector('table tbody');
-          goals.forEach(g => {
-            const row = document.createElement('tr');
-            const goal = g.goal;
-            row.innerHTML = `
-              <td>${g.id}</td>
-              <td>${goal.goalName}</td>
-              <td>${goal.startDateTime}</td>
-              <td>${goal.target}</td>
-              <td>${goal.age}</td>
-              <td>${goal.currentWeight}</td>
-              <td>${goal.height}</td>
-              <td>
-                <button class="btn btn-primary btn-sm">Edit</button>
-                <button class="btn btn-danger btn-sm">Delete</button>
-              </td>
-            `;
-            tableBody.appendChild(row);
-          });
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+script.
+  document.addEventListener('DOMContentLoaded', function() {
+    // Загрузка целей
+    axios.get('/api/goals').then(function(response) {
+      const goals = response.data;
+      const tableBody = document.querySelector('table tbody');
+      
+      goals.forEach(function(g) {
+        const row = document.createElement('tr');
+        const goal = g.goal;
+        
+        row.innerHTML = `
+          <td>${g.id}</td>
+          <td>${goal.goalName}</td>
+          <td>${new Date(goal.startDateTime).toLocaleString()}</td>
+          <td>${goal.target}</td>
+          <td>${goal.age}</td>
+          <td>${goal.currentWeight}</td>
+          <td>${goal.height}</td>
+          <td>
+            <button class="btn btn-primary btn-sm" onclick="window.location.href='/goals/update/${g.id}'">Edit</button>
+            <button class="btn btn-danger btn-sm" data-id="${g.id}">Delete</button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }).catch(function(error) {
+      console.error('Error loading goals:', error);
     });
+
+    // Обработка удаления
+    document.addEventListener('click', function(event) {
+      if (event.target.classList.contains('btn-danger')) {
+        const goalId = event.target.getAttribute('data-id');
+        if (confirm('Are you sure you want to delete this goal?')) {
+          axios.delete('/api/goals/' + goalId)
+            .then(function() {
+              alert('Goal deleted successfully');
+              location.reload();
+            })
+            .catch(function(error) {
+              alert('Error: ' + (error.response?.data?.message || error.message));
+            });
+        }
+      }
+    });
+  });

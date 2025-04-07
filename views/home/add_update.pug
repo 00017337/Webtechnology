@@ -1,48 +1,82 @@
 include ../head.pug
-
 body
   .container.mt-5
-    h1 Add/Update Goal
-    form(action="/submit-goal-form" method="POST")
-      .mb-3
-        label(for="goalName" class="form-label") Goal Name
-        input(type="text" class="form-control" id="goalName" name="goalName" required)
-      .mb-3
-        label(for="startDateTime" class="form-label") Start Date/Time
-        .input-group.date(id="datetimepicker1" data-target-input="nearest")
-          input(
-            type="text"
-            class="form-control datetimepicker-input"
-            data-target="#datetimepicker1"
-            name="startDateTime"
-            required
-          )
-          .input-group-append(data-target="#datetimepicker1" data-toggle="datetimepicker")
-            .input-group-text
-              i.fas.fa-calendar-alt
-      .mb-3
-        label(for="Target" class="form-label") Target
-        input(type="text" class="form-control" id="target" name="target" required)
-      .mb-3
-        label(for="age" class="form-label") Age
-        input(type="number" class="form-control" id="age" name="age" placeholder="e.g., 25" min="1" required)
-      .mb-3
-        label(for="currentWeight" class="form-label") Current Weight (kg)
-        input(type="number" class="form-control" id="currentWeight" name="currentWeight" placeholder="e.g., 70 kg" min="1" step="any" required)
-      .mb-3
-        label(for="height" class="form-label") Height (cm)
-        input(type="number" class="form-control" id="height" name="height" placeholder="e.g., 170 cm" min="50" step="any" required)
-      .mb-3
-        label(for="goalImage" class="form-label") Goal Image
-        input(type="file" class="form-control" id="goalImage" name="goalImage" accept="image/*")
-      button(type="submit" class="btn btn-primary") Add/Edit
+    h1 #{mode}
+    .mb-3
+      label(for="goalName" class="form-label") Goal Name
+      input(type="text" class="form-control" id="goalName" name="goalName" required)
+    .mb-3
+      label(for="startDateTime" class="form-label") Start Date/Time
+      .input-group.date(id="datetimepicker1" data-target-input="nearest")
+        input(type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" id="startDateTime" name="startDateTime" required)
+        .input-group-append(data-target="#datetimepicker1" data-toggle="datetimepicker")
+          .input-group-text
+            i.fas.fa-calendar-alt
+    .mb-3
+      label(for="target" class="form-label") Target
+      input(type="text" class="form-control" id="target" name="target" required)
+    .mb-3
+      label(for="age" class="form-label") Age
+      input(type="number" class="form-control" id="age" name="age" required)
+    .mb-3
+      label(for="currentWeight" class="form-label") Current Weight (kg)
+      input(type="number" step="0.1" class="form-control" id="currentWeight" name="currentWeight" required)
+    .mb-3
+      label(for="height" class="form-label") Height (cm)
+      input(type="number" class="form-control" id="height" name="height" required)
+    button(type="submit" class="btn btn-success" onclick="submitForm()") #{mode === 'Update' ? 'Update' : 'Add'}
+    span &nbsp;
+    button(type="submit" class="btn btn-primary" onclick="window.location.href='/goals'") Back to list
 
   script.
+    const format = 'DD/MM/YYYY HH:mm'
     const picker = new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'), {
       localization: {
-        'locale': 'fr'
+        'locale': 'en' // ← Изменил на английский (было 'fr')
       }
-    });
+    })
     picker.dates.formatInput = function(date) {
-      return moment(date).format('DD/MM/YYYY HH:mm');
-    };
+      return moment(date).format(format)
+    }
+
+    if ("#{mode}" === "Update") {
+      const goalData = !{JSON.stringify(goalData || {})}.goal; // ← Заменил eventData на goalData
+      document.getElementById('goalName').value = goalData.goalName || '';
+      
+      picker.dates.setValue(
+        new tempusDominus.DateTime(moment(goalData.startDateTime, format))
+      );
+
+      document.getElementById('target').value = goalData.target || '';
+      document.getElementById('age').value = goalData.age || '';
+      document.getElementById('currentWeight').value = goalData.currentWeight || '';
+      document.getElementById('height').value = goalData.height || '';
+    }
+
+    function submitForm() {
+      const goalData = {
+        goalName: document.getElementById('goalName').value,
+        startDateTime: document.getElementById('startDateTime').value,
+        target: document.getElementById('target').value,
+        age: document.getElementById('age').value,
+        currentWeight: document.getElementById('currentWeight').value,
+        height: document.getElementById('height').value,
+      };
+
+      const url = "#{mode}" === "Update" 
+        ? `/api/goals/${!{JSON.stringify(goalData || {})}.id}`  // ← Эндпоинт /api/goals
+        : '/api/goals';
+      const method = "#{mode}" === "Update" ? 'put' : 'post';
+
+      axios[method](url, goalData)
+        .then(response => {
+          alert('Success!');
+          location.href = '/goals' // ← Перенаправление на список целей
+        })
+        .catch(error => {
+          if(error.response)
+            alert(JSON.stringify(error.response.data.errors))
+          else
+            alert(error)
+        });
+    }
