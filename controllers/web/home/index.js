@@ -2,7 +2,6 @@ const goal_service = require('../../../services/goal');
 
 const home_controller = {
   index: (req, res) => res.render('home/index'),
-
   // Empty form
   addGoalPage: (req, res) => {
     res.render('home/add_update', {
@@ -10,7 +9,6 @@ const home_controller = {
       goalData: null
     });
   },
-
   // Filled form
   updateGoalPage: async (req, res) => {
     const goal = await goal_service.getById(req.params.id);

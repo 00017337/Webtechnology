@@ -10,7 +10,6 @@ const goal_controller = {
             res.status(500).json({ message: 'Error fetching goals', error: err });
         }
     },
-
     // Create new goal
     create(req, res) {
         try {
@@ -20,7 +19,6 @@ const goal_controller = {
             res.status(500).json({ message: 'Error creating goal', error: err });
         }
     },
-
     // Update existing goal (NEW)
     update(req, res) {
         try {
@@ -32,7 +30,6 @@ const goal_controller = {
             res.status(500).json({ message: 'Error updating goal', error: err });
         }
     },
-
     // Delete goal (NEW)
     delete(req, res) {
         try {
@@ -52,7 +49,6 @@ module.exports = {
         res.status(500).send(error.message);
       }
     },
-  
     addForm: (req, res) => {
       res.render('goals/form', { 
         mode: 'Add',
@@ -66,7 +62,6 @@ module.exports = {
         }
       });
     },
-  
     editForm: async (req, res) => {
       try {
         const goal = goal_service.getById(req.params.id);
