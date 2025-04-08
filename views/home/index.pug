@@ -1,9 +1,11 @@
 include ../head.pug
+
 body
   .container.mt-5
     .row.d-flex.align-items-center
       .col-md-6
         h1 My Goals
+        h6 “This web application was created to fulfill Web Technology module’s requirements and does not represent an actual company or service”
       .col-md-6.text-end
         a.btn.btn-success(href='/goals/add', role='button') Add Goal
     table.table.table-responsive.table-hover.table-striped.table-dark
@@ -30,7 +32,7 @@ script.
         const row = document.createElement('tr');
         const goal = g.goal;
         
-        row.innerHTML = `
+        row.innerHTML = ` 
           <td>${g.id}</td>
           <td>${goal.goalName}</td>
           <td>${new Date(goal.startDateTime).toLocaleString()}</td>
