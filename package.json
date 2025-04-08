@@ -3,6 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "express": "^5.1.0",
+    "express-validator": "^7.2.1",
+    "nodemon": "^3.1.9",
+    "pug": "^3.0.3"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
@@ -18,12 +25,5 @@
   "bugs": {
     "url": "https://github.com/00017337/Webtechnology/issues"
   },
-  "homepage": "https://github.com/00017337/Webtechnology#readme",
-  "dependencies": {
-    "body-parser": "^2.2.0",
-    "express": "^5.1.0",
-    "express-validator": "^7.2.1",
-    "nodemon": "^3.1.9",
-    "pug": "^3.0.3"
-  }
+  "homepage": "https://github.com/00017337/Webtechnology#readme"
 }

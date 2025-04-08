@@ -38,3 +38,7 @@ The project follows the recommended structure provided in the assignment
 ## Installation
 npm install
 npm start
+
+# Links
+https://fitnessgoalsapptrecker.onrender.com/ deployed
+https://github.com/00017337/Webtechnology github
