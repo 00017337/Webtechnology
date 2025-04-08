@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router();
 const home_controller = require('../../../controllers/web/home');
 
-// Главная страница
+//Main page
 router.get('/', home_controller.index);
 
-// Страница добавления цели
+// Add page
 router.get('/goals/add', home_controller.addGoalPage);
 
-// Страница обновления цели по ID
+// Page for adding goals by id
 router.get('/goals/update/:id', home_controller.updateGoalPage);
 
 module.exports = router;

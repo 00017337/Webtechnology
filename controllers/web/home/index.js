@@ -3,7 +3,7 @@ const goal_service = require('../../../services/goal');
 const home_controller = {
   index: (req, res) => res.render('home/index'),
 
-  // Пустая форма
+  // Empty form
   addGoalPage: (req, res) => {
     res.render('home/add_update', {
       mode: 'Add',
@@ -11,7 +11,7 @@ const home_controller = {
     });
   },
 
-  // Заполненная форма
+  // Filled form
   updateGoalPage: async (req, res) => {
     const goal = await goal_service.getById(req.params.id);
     if (!goal) return res.status(404).send('Goal not found');

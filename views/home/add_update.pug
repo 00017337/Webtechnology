@@ -32,7 +32,7 @@ body
     const format = 'DD/MM/YYYY HH:mm'
     const picker = new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'), {
       localization: {
-        'locale': 'en' // ← Изменил на английский (было 'fr')
+        'locale': 'en'
       }
     })
     picker.dates.formatInput = function(date) {
@@ -40,7 +40,7 @@ body
     }
 
     if ("#{mode}" === "Update") {
-      const goalData = !{JSON.stringify(goalData || {})}.goal; // ← Заменил eventData на goalData
+      const goalData = !{JSON.stringify(goalData || {})}.goal; // Replaced eventData with goalData
       document.getElementById('goalName').value = goalData.goalName || '';
       
       picker.dates.setValue(
@@ -64,14 +64,14 @@ body
       };
 
       const url = "#{mode}" === "Update" 
-        ? `/api/goals/${!{JSON.stringify(goalData || {})}.id}`  // ← Эндпоинт /api/goals
+        ? `/api/goals/${!{JSON.stringify(goalData || {})}.id}` // Endpoint: /api/goals
         : '/api/goals';
       const method = "#{mode}" === "Update" ? 'put' : 'post';
 
       axios[method](url, goalData)
         .then(response => {
           alert('Success!');
-          location.href = '/goals' // ← Перенаправление на список целей
+          location.href = '/goals' // Redirecting to the list of goals
         })
         .catch(error => {
           if(error.response)

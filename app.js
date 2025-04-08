@@ -7,11 +7,9 @@ const path = require('path');
 // make mock database (raw .json file) available globally in app
 global.mock_db = path.join(__dirname, './data/mock_db.json');
 
-// Импорт маршрутов
 const web_route = require('./routes/web');
 const api_route = require('./routes/api');
-const goal_api_route = require('./routes/api/goals'); // 👈 добавляем goals
-
+const goal_api_route = require('./routes/api/goals');
 const app = express();
 
 // Set the view engine for web routes
@@ -26,15 +24,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use('/api', api_route); // API routes
-app.use('/api/goals', goal_api_route); // 👈 API для целей
-app.use('/', web_route); // Web routes
+app.use('/api', api_route);
+app.use('/api/goals', goal_api_route); 
+app.use('/', web_route); 
 
 // Redirect unknown routes to home page
 app.use((req, res) => {
   res.redirect('/');
 });
 
-// Start server
 const port = 3000;
 app.listen(port, () => console.log(`Server running on port ${port}`));

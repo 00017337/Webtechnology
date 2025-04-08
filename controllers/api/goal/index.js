@@ -25,8 +25,7 @@ const goal_controller = {
     update(req, res) {
         try {
             const updatedGoal = goal_service.update(
-                req.params.id,  // ID цели
-                req.body        // Новые данные (goalName, startDateTime, target, age, etc.)
+                req.params.id,  
             );
             res.json(updatedGoal);
         } catch (err) {
@@ -87,7 +86,7 @@ module.exports = {
         try {
           const goals = goal_service.getAll();
           res.render('home/index', { 
-            goals: goals || [] // Всегда передаем массив, даже если goals undefined
+            goals: goals || [] // always get massiv
           });
         } catch (error) {
           console.error('Error fetching goals:', error);

@@ -49,7 +49,7 @@ const updateGoalValidation = () => {
         throw new Error('Goal not found');
       }
     }),
-    ...addGoalValidation() // Используем те же правила валидации, что и для добавления
+    ...addGoalValidation()
   ];
 };
 
